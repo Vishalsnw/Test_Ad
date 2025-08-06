@@ -1,18 +1,30 @@
-name: Unzip APK File
+name: Unzip and Commit APK Contents
 
 on:
   workflow_dispatch:
 
 jobs:
-  unzip_job:
+  unzip_and_commit:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repo
       uses: actions/checkout@v3
 
-    - name: List files (debug)
-      run: ls -l
+    - name: Show current files (for debug)
+      run: ls -la
 
-    - name: Unzip APK file
+    - name: Unzip Apk.zip to extracted-folder
       run: unzip Apk.zip -d extracted-folder
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+
+    - name: Add and Commit extracted files
+      run: |
+        git add extracted-folder
+        git commit -m "🔧 Extracted Apk.zip into extracted-folder"
+        git push origin main
+      continue-on-error: true
