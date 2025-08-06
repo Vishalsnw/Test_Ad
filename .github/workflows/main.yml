@@ -24,17 +24,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 📦 Unzip Apk.zip to extracted-folder
-        run: unzip Apk.zip -d extracted-folder
-
-      - name: 🔁 Git Commit & Push Extracted Code
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add extracted-folder/
-          git commit -m "🗂️ Extracted Apk.zip to extracted-folder [auto]" || echo "No changes to commit"
-          git push origin main
-
       - name: 🛠 Make gradlew Executable
         run: chmod +x extracted-folder/NewProject10/gradlew
 
